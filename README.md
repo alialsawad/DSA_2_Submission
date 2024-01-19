@@ -4,7 +4,7 @@
 
 **Package constraints**: NumPy, Matplotlib, Pandas and NetworkX.
 
-## 1. N-Queens Problem
+## **1. N-Queens Problem**
 
 Code the n-queens problem in Python with the following instructions:
 
@@ -146,42 +146,38 @@ else:
 n_queens.test_eight_queens_las_vegas()
 ```
 
-### Approach comparison
-
-What are the differences between the two algorithms?
+### What are the differences between the two algorithms?
 
 - The main difference between the two algorithms is how they respond to encountering dead ends. The backtracking approach undoes its steps and returns to an earlier decision point to explore different configurations. In contrast, the Las Vegas approach restarts with a completely new board configuration upon reaching a dead end.
 - Backtracking is deterministic, meaning it consistently follows the same path and makes the same choices for a given input. In contrast, the Las Vegas approach is non-deterministic; it can follow different paths for the same input.
 - The Las Vegas approach exhibits higher variability in time complexity from one run to another, even with the same input, in contrast to the backtracking approach.
 - The backtracking approach systematically explores all possible configurations to find a solution if one exists, as it is exhaustive in nature. In contrast, the Las Vegas approach may not always find a solution, especially with a limited number of attempts. However, if allowed to run indefinitely and assuming a solution exists, the Las Vegas algorithm would eventually find a solution.
 
-Which data structure/s did you use to implement this problem? Give your reasoning.
+### Which data structure/s did you use to implement this problem? Give your reasoning.
 
 - I utilized a 2D array to represent the board. This proved efficient given the constant time access provided by the array data structure and the frequency of accesses our algorithms need. The 2D array also simplifies both initialization and traversal processes. Additionally, traversing the array simplifies the extraction of the queens' arrangement on the board, which aids in visualization.
 
 - To track the positions under attack by the queens, I employed three sets:
 
   - `col` monitors the columns that are under attack.
-    - Using a set allows for constant time lookup in the `is_safe` method.
   - `diag` keeps track of the diagonals under attack.
-    - Using a set allows for constant time insertion in the `place_queen` method.
   - `anti_diag` identifies the anti-diagonals that are under attack.
-    - Using a set allows for constant time removal in the `remove_queen` method.
 
-If we have 8 queens, what is the success rate of each of the algorithms?
+Using sets allows for constant time insertion, removal and checking whether an element with the specified value exists in the set or not.
+
+### If we have 8 queens, what is the success rate of each of the algorithms?
+
 **Hint:** To know the success rate, decide on a fixed number of runs. From these, record which runs give a successful result. By dividing the successful runs over the total amount of runs, you’ll have the success rate of your algorithm.
 
 - The success rate of the Las Vegas approach for the eight queens problem is approximately 0.72 given 10 attempts each run. The backtracking approach is guaranteed to find a solution if one exists, so its success rate is 1.0.
 
----
-
-## 2. Minimum Spanning Tree
+## **2. Minimum Spanning Tree**
 
 Using Python programming language, code one of the Minimum Spanning Tree (MST) algorithms, either Prim’s or Kruskal’s, for the following graph:
 
 ![q2_mst_graph](./q2_mst_graph.png)
 
-Requirements:
+**Requirements:**
 
 1. Depict the original graph first.
 2. State which MST algorithm you are following.
@@ -327,11 +323,9 @@ mst_visualizer = MstVisualizer(G, mst_edges, total_weight)
 mst_visualizer.draw_graph()
 ```
 
----
+## **3. Quick Sort**
 
-## 3. Quick Sort
-
-Provide the pseudocode for an in-place quicksort algorithm where the pivot is always the second element in the array.
+### Provide the pseudocode for an in-place quicksort algorithm where the pivot is always the second element in the array.
 
 ```
 # Procedure partition:
@@ -403,7 +397,7 @@ procedure sortList(arr: List of comparable items)
     return arr
 ```
 
-Implement that pseudocode using Python.
+### Implement that pseudocode using Python.
 
 ```python
 import random
@@ -485,31 +479,22 @@ def sortArray(arr):
 print(sortArray([5,2,3,1]))
 ```
 
-Is there any other way to code a quicksort algorithm? Cite your sources to answer this question.
+### Is there any other way to code a quicksort algorithm? Cite your sources to answer this question
 
-- Yes, there are other ways to code a quicksort algorithm. For example, we can use quicksort three way partitioning method:
+Yes, there are other ways to code a quicksort algorithm. For example, we can use quicksort three way partitioning method:
 
 ```
+Partitioning Logic in QuickSort 3 way partitioning [Reference: 1]
+
 a[i] less than v: exchange a[lt] with a[i] and increment both lt and i
 a[i] greater than v: exchange a[i] with a[gt] and decrement gt
 a[i] equal to v: increment i
 ```
 
-[1]
-
-- 3-way partitioning makes quicksort asymptotically faster than mergesort and other methods in practical situations involving large numbers of equal keys.[1] Quicksort with 3-way partitioning uses ~ (2ln 2) N H compares to sort N items, where H is the Shannon entropy, defined from the frequencies of key values.[2]
-
-- "Another well-known way to find a better partitioning element is to take a sample of three elements from the file, then to use the median of the three
-  for the partitioning element. By choosing the three elements from the left, middle, and right of the array... This improvement is called the median-of-three method. The median-of-three method helps quicksort in three ways. First, it makes the worst case much more unlikely to occur in any actual sort. For the sort to take N^2 time, two out of the three elements examined must be among the largest or among the smallest elements in the file, and this event must happen consistently through most of the partitions. Second, it eliminates the need for a sentinel key for partitioning, because this function is served by one of the three elements that are examined before partitioning. Third, it reduces the total average running time of the algorithm by about 5 percent."[3]
-
-**Sources**:
-
-- [1] Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.298.
-- [2] Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.301.
-- [3] Sedgewick, R. (1998). Algorithms In C: Fundamentals, Data Structures, Sorting, Searching, Parts 1-4, 3rd ed. Pearson Education, 7.5 Median-of-Three Partitioning
+3-way partitioning makes quicksort asymptotically faster than mergesort and other methods in practical situations involving large numbers of equal keys.[1] Quicksort with 3-way partitioning uses ~ (2ln 2) N H compares to sort N items, where H is the Shannon entropy, defined from the frequencies of key values.[3]
 
 ```python
-# Source: Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.299. (3-way partitioning)
+# [Reference: 2]
 
 import random
 
@@ -572,16 +557,23 @@ def sortArray(arr):
 print(sortArray([5,2,3,1]))
 ```
 
----
+"Another well-known way to find a better partitioning element is to take a sample of three elements from the file, then to use the median of the three for the partitioning element. By choosing the three elements from the left, middle, and right of the array... This improvement is called the median-of-three method. The median-of-three method helps quicksort in three ways. First, it makes the worst case much more unlikely to occur in any actual sort. For the sort to take N^2 time, two out of the three elements examined must be among the largest or among the smallest elements in the file, and this event must happen consistently through most of the partitions. Second, it eliminates the need for a sentinel key for partitioning, because this function is served by one of the three elements that are examined before partitioning. Third, it reduces the total average running time of the algorithm by about 5 percent."[4]
 
-## 4. Collatz Conjecture
+**Sources**:
 
-The Collatz conjecture is a mathematical problem that is unsolved as of yet. Essentially, it states that for any positive integer 𝑛, we can arrive to the integer 1 by following the rules:
+- [1] Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.298.
+- [2] Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.299.
+- [3] Sedgewick, R. and Wayne, K. (2011). Algorithms. 4th ed. Addison-Wesley Professional, p.301.
+- [4] Sedgewick, R. (1998). Algorithms In C: Fundamentals, Data Structures, Sorting, Searching, Parts 1-4, 3rd ed. Pearson Education, 7.5 Median-of-Three Partitioning
+
+## **4. Collatz Conjecture**
+
+The Collatz conjecture is a mathematical problem that is unsolved as of yet. Essentially, it states that for any positive integer n, we can arrive to the integer 1 by following the rules:
 
 - 3x + 1 if x is odd
 - x/2 if x is even
 
-Code the Collatz conjecture using Python by creating a recursive function called collatz(n)
+### Code the Collatz conjecture using Python by creating a recursive function called collatz(n)
 
 ```python
 def collatz(n):
@@ -595,21 +587,21 @@ def collatz(n):
 print(collatz(592))
 ```
 
----
+## **5. Needleman-Wunsch Algorithm**
 
-## 5. Needleman-Wunsch Algorithm
-
-Solve the following string alignment problem using Needleman-Wunsch (no coding). You need to use the optimal alignment algorithm with the strings TACATACA and GATTAGC.
+Solve the following string alignment problem using Needleman-Wunsch (no coding). You need to use the optimal alignment algorithm with the strings TACATACA and GATTAGC. Please provide the alignment matrix, the trace-back and the string alignment.
 
 **Note**: Remember that the penalty for both a substitution and a gap is -1. A match score is +1, but it needs to come from the diagonal.
 
-Please provide the alignment matrix, the trace-back and the string alignment.
-
-Alignment matrix:
+### Alignment matrix with traceback
 
 ![q5_alignment_matrix](./q5_alignment_matrix.png)
 
-String alignment:
+**Note**: The traceback is the path from the bottom right corner to the top left corner of the alignment matrix.
+
+### String alignment
 
 - TACATACA
 - GA-TTAGC
+
+The global alignment score is 2.
