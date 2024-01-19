@@ -591,7 +591,15 @@ print(collatz(592))
 
 Solve the following string alignment problem using Needleman-Wunsch (no coding). You need to use the optimal alignment algorithm with the strings TACATACA and GATTAGC. Please provide the alignment matrix, the trace-back and the string alignment.
 
-**Note**: Remember that the penalty for both a substitution and a gap is -1. A match score is +1, but it needs to come from the diagonal.
+```
+Needleman-Wunsch scoring system
+
+The variant we will use in this course is the following:
+
+Penalty for a gap: -1 (you might see this as “indel”, insertion/deletion)
+Penalty for a mismatch: -1
+Score for a match: +1 (coming from the diagonal)
+```
 
 ### Alignment matrix with traceback
 
@@ -599,9 +607,9 @@ Solve the following string alignment problem using Needleman-Wunsch (no coding).
 
 **Note**: The traceback is the path from the bottom right corner to the top left corner of the alignment matrix.
 
-### String alignment
+### Aligned strings:
 
-- TACATACA
-- GA-TTAGC
+- TACATA-CA
+- GA-TTAGC-
 
-The global alignment score is 2.
+**Global alignment score:** -1
