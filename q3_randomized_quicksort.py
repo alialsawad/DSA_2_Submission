@@ -73,3 +73,5 @@ def sortArray(arr):
     quicksort(arr, 0, len(arr) - 1)
 
     return arr
+
+print(sortArray([5,2,3,1]))

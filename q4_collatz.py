@@ -5,3 +5,5 @@ def collatz(n):
         return collatz(n // 2)
     else:
         return collatz(3 * n + 1)
+
+print(collatz(592))

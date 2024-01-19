@@ -57,3 +57,5 @@ def sortArray(arr):
     quicksort_3_way(arr, 0, len(arr) - 1)
 
     return arr
+
+print(sortArray([5,2,3,1]))

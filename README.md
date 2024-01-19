@@ -238,23 +238,33 @@ class MstVisualizer:
         self.total_weight = total_weight
         self.pos = nx.shell_layout(G) if layout is None else layout
 
-    def _draw_graph_info(self, ax, graph_info):
-        mst_edges = graph_info.get("mst_edges", [])
-        # Remove duplicate edges so that we don't draw them twice (better visualization)
-        graph_edges = list(filter(
-            lambda edge: edge not in mst_edges and
-            (edge[1], edge[0]) not in mst_edges, graph_info.get("edges", [])))
+    def draw_graph(self):
+        # +1 for original graph, +1 for mst
+        num_steps = len(self.mst_edges) + 2
+        num_cols = 3
+        num_rows = ceil(num_steps / num_cols)
 
-        all_edges = list(graph_edges) + list(mst_edges)
+        # Create a figure with a subplot for each step of the algorithm
+        _, axes = plt.subplots(nrows=num_rows, ncols=num_cols,
+                               figsize=(20, 5))
+        axes = axes.flatten()
 
-        edge_colors = ['black'] * len(graph_edges) + ['red'] * len(mst_edges)
 
-        nx.draw_networkx(self.graph, self.pos, ax=ax, node_color='lightblue',
-                         node_size=600, edgelist=all_edges, edge_color=edge_colors, width=1.25)
-        nx.draw_networkx_edge_labels(
-            self.graph, self.pos, edge_labels=graph_info.get("edge_labels"), ax=ax, font_size=8)
-        ax.set_title(
-            graph_info.get("title"), fontsize=12)
+
+        # A list of highlighted edges as they were added to the MST
+        cur_mst_edges = set()
+        for i in range(num_steps):
+            if i > 0 and i <= len(self.mst_edges):
+                cur_mst_edge = self.mst_edges[i - 1]
+                cur_mst_edges.add((cur_mst_edge[0], cur_mst_edge[1]))
+            # Draw the current graph representation at the corresponding axis
+            self._draw_graph_step(axes[i], i, cur_mst_edges)
+
+        # remove extra axes (subplots) that we don't need
+        for i in range(num_steps, len(axes)):
+            axes[i].axis('off')
+        plt.tight_layout()
+        plt.show()
 
     def _draw_graph_step(self, ax, step, cur_mst_edges):
         not_mst = step <= len(self.mst_edges)
@@ -279,32 +289,23 @@ class MstVisualizer:
 
         self._draw_graph_info(ax, graph_info)
 
-    def draw_graph(self):
-        # +1 for original graph, +1 for mst
-        num_steps = len(self.mst_edges) + 2
-        num_cols = 3
-        num_rows = ceil(num_steps / num_cols)
+    def _draw_graph_info(self, ax, graph_info):
+        mst_edges = graph_info.get("mst_edges", [])
+        # Remove duplicate edges so that we don't draw them twice (better visualization)
+        graph_edges = list(filter(
+            lambda edge: edge not in mst_edges and
+            (edge[1], edge[0]) not in mst_edges, graph_info.get("edges", [])))
 
-        # Create a figure with a subplot for each step of the algorithm
-        _, axes = plt.subplots(nrows=num_rows, ncols=num_cols,
-                               figsize=(20, 5))
-        axes = axes.flatten()
+        all_edges = list(graph_edges) + list(mst_edges)
 
-        # remove extra axes (subplots) that we don't need
-        for i in range(num_steps, len(axes)):
-            axes[i].axis('off')
+        edge_colors = ['black'] * len(graph_edges) + ['red'] * len(mst_edges)
 
-        # A list of highlighted edges as they were added to the MST
-        cur_mst_edges = set()
-        for i in range(num_steps):
-            if i > 0 and i <= len(self.mst_edges):
-                cur_mst_edge = self.mst_edges[i - 1]
-                cur_mst_edges.add((cur_mst_edge[0], cur_mst_edge[1]))
-            # Draw the current graph representation at the corresponding axis
-            self._draw_graph_step(axes[i], i, cur_mst_edges)
-
-        plt.tight_layout()
-        plt.show()
+        nx.draw_networkx(self.graph, self.pos, ax=ax, node_color='lightblue',
+                         node_size=600, edgelist=all_edges, edge_color=edge_colors, width=1.25)
+        nx.draw_networkx_edge_labels(
+            self.graph, self.pos, edge_labels=graph_info.get("edge_labels"), ax=ax, font_size=8)
+        ax.set_title(
+            graph_info.get("title"), fontsize=12)
 
 
 def create_graph(edges):
@@ -478,7 +479,10 @@ def sortArray(arr):
     """
     shuffle(arr)
     quicksort(arr, 0, len(arr) - 1)
+
     return arr
+
+print(sortArray([5,2,3,1]))
 ```
 
 Is there any other way to code a quicksort algorithm? Cite your sources to answer this question.
@@ -564,6 +568,8 @@ def sortArray(arr):
     quicksort_3_way(arr, 0, len(arr) - 1)
 
     return arr
+
+print(sortArray([5,2,3,1]))
 ```
 
 ---
@@ -585,6 +591,8 @@ def collatz(n):
         return collatz(n // 2)
     else:
         return collatz(3 * n + 1)
+
+print(collatz(592))
 ```
 
 ---
